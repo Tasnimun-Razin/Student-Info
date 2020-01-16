@@ -1,0 +1,570 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#include "prototypes.h"
+
+#define FULL_FEE 4300
+#define MAX 80
+
+char file[]={"HSC_student.dat"};
+
+//Current size of student array
+int currentSize=0;
+
+//This ID will increase every time a new student is added
+int id=2001;
+
+DATA std_array[MAX];
+
+void heading()
+{	printf("--------------------------------------------------");
+	printf("\n\nID    FULL NAME         NICK NAME  COLLEGE   SSC YEAR  GPA   SCHOLARSHIP  BLOOD GROUP   EMAIL                CONTACT NUMBER  PAYMENT");
+	printf("\n\n --------------------------------------------------");
+}
+
+
+void headingDues()
+{	printf("--------------------------------------------------");
+	printf("\n\nID    FULL NAME         NICK NAME  COLLEGE   EMAIL                CONTACT NUMBER  PAID    DUES");
+	printf("\n\n --------------------------------------------------");
+}
+
+void heading_NotPaid()
+{	printf("--------------------------------------------------");
+	printf("\n\nID    FULL NAME         NICK NAME  COLLEGE   EMAIL                CONTACT NUMBER");
+	printf("\n\n --------------------------------------------------");
+}
+
+
+void add()
+{	FILE *fp;
+	DATA s = std_array[currentSize] ;
+	
+	char chn, chs, schlrshp, chp, Y, N;
+	int pay, adv;
+	
+	fp=fopen("HSC_student.dat","ab");
+	
+	if(currentSize>=MAX)
+		printf(">> Sorry, Admission Closed <<");
+	
+	else
+	{	printf("\n\n **Enter**");
+	
+		printf("\n First Name :");
+		scanf("%s", s.f_name);
+		printf("\n Last Name :");
+		scanf("%s", s.l_name);
+	
+		printf("\n Any Nick Name? (Y/N)");
+		printf("\n =====");
+		scanf("%c", &chn);
+		if(chn=='Y')
+		{	printf("\n Nick Name :");
+			scanf("%s", s.n_name);
+		}
+		else
+			strcpy(s.n_name, s.f_name);
+		
+		printf("\n College Name :");
+		scanf("%s", s.c_name);
+		printf("\n SSC Year :");
+		scanf("%d", s.ssc_year);
+		printf("\n GPA :");
+		scanf("%.2f", s.gpa);
+	
+		printf("\n Scholarship? (Y/N)");
+		printf("\n =====");
+		scanf("%c", chs);
+		if(chs=='Y')
+		{	printf("\n Talentpool or General?");
+			printf("\n =====");
+			scanf("%s", s.schlrshp);
+		}
+	
+		printf("\n Blood Group :");
+		scanf("%s", s.b_g);
+		printf("\n Email Address :");
+		scanf("%s", s.email);
+		printf("\n Contact Number :");
+		scanf("%s", s.c_n);
+	
+		printf("\n Will You Give this Month's Payment? (Y/N)");
+		printf("\n =====");
+		scanf("%c", &chp);
+		if(chp=='Y')
+		{	printf("\n1. Full\t2. Dues");
+			printf("\n =====");
+			scanf("%d", &pay);
+			
+			switch(pay)
+			{	case 1: strcpy(s.pay, "Paid");
+						break;
+				case 2: int adv, dues;
+						printf("\n How Much will You Pay?");
+						printf("\n =====");
+						scanf("%d", adv);
+						dues = FULL_FEE-adv;
+				default:printf("\n Wrong Choice, Please Try Again.");
+			}
+		}
+		else
+			strcpy(s.pay, "Not Paid");
+			
+		
+		printf("\n\n Student ID : %d", id);
+		++id;
+		
+		
+		++currentSize;
+		
+		 //&std_array[0]= std_array
+		 
+//		fwrite(std_array, sizeof(std_array), 1, fp);
+//		fwrite(&currentSize, sizeof(currentSize), 1, fp);
+//        fwrite(&id, sizeof(id), 1, fp);		
+//		fclose(fp);
+//		
+       }
+}
+
+
+void modify()
+{	int ID, chM, chPay, chn, chs, chp, pay, i;
+	DATA s = std_array[];
+	printf("\n\n\n Enter the ID :");
+	scanf("%d", &ID);
+	printf("\n\n Which Info do You Want to Modify?");
+	printf("\n----------------------------------------");
+	
+	startMod:
+		
+	printf("\n\n1.All Info\n2. ID\n3. First Name\n4. Last Name\n5. Nick Name\n6. College Name\n7. SSC Year\n8. GPA\n9. Scholarship Status\n10. Blood Group\n11. Email\n12. Contact Number\n13. Payment Status\n14. Back");
+	printf("\n\n\t =====");
+	scanf("%d", &chM);
+	
+	switch(chM)
+	{	case 1: printf("\n\n **Enter New**");
+				
+				printf("\n\n ID :");
+				scanf("%d", s.id);
+				printf("\n First Name :");
+				scanf("%s", s.f_name);
+				printf("\n Last Name :");
+				scanf("%s", s.l_name);
+	
+				printf("\n Any Nick Name? (Y/N)");
+				printf("\n =====");
+				scanf("%c", &chn);
+				if(chn=='Y')
+				{	printf("\n Nick Name :");
+					scanf("%s", s.n_name);
+				}
+				else
+					strcpy(s.n_name, s.f_name);
+		
+				printf("\n College Name :");
+				scanf("%s", s.c_name);
+				printf("\n SSC Year :");
+				scanf("%d", s.ssc_year);
+				printf("\n GPA :");
+				scanf("%.2f", s.gpa);
+	
+				printf("\n Scholarship? (Y/N)");
+				printf("\n =====");
+				scanf("%c", chs);
+				if(chs=='Y')
+				{	printf("\n Talentpool or General?");
+					printf("\n =====");
+					scanf("%s", s.schlrshp);
+				}
+	
+				printf("\n Blood Group :");
+				scanf("%s", s.b_g);
+				printf("\n Email Address :");
+				scanf("%s", s.email);
+				printf("\n Contact Number :");
+				scanf("%s", s.c_n);
+	
+				printf("\n Will You Give this Month's Payment? (Y/N)");
+				printf("\n =====");
+				scanf("%c", &chp);
+				if(chp=='Y')
+				{	printf("\n1. Full\t2. Dues");
+					printf("\n =====");
+					scanf("%d", &pay);
+			
+					switch(pay)
+					{	case 1: strcpy(s.pay, "Paid");
+								break;
+						case 2: int adv, dues;
+								printf("\n How Much will You Pay?");
+								printf("\n =====");
+								scanf("%d", adv);
+								dues = FULL_FEE-adv;
+								default:printf("\n Wrong Choice, Please Try Again.");
+					}
+				}
+				else
+					strcpy(s.pay, "Not Paid");
+					
+				printf("\n\n **All Info Modified Successfully**");
+				break;
+		
+		
+		case 2: printf("\n\n **Enter New ID :**");
+				scanf("%d", s.id);
+				printf("\n *ID Modified Successfully**");
+				break;
+		case 3: printf("\n\n **Enter New First Name :**");
+				scanf("%s", s.f_name);
+				printf("\n *First Name Modified Successfully**");
+				break;
+		case 4: printf("\n\n **Enter New Last Name :**");
+				scanf("%s", s.l_name);
+				printf("\n *Last Name Modified Successfully**");
+				break;
+		case 6: printf("\n\n **Enter New College Name :**");
+				scanf("%s", s.c_name);
+				printf("\n *College Name Modified Successfully**");
+				break;
+		case 5: printf("\n\n **Enter New Nick Name :**");
+				scanf("%s", s.n_name);
+				printf("\n *Nick Name Modified Successfully**");
+				break;
+		case 7: printf("\n\n **Enter New SSC Year :**");
+				scanf("%d", s.ssc_year);
+				printf("\n *SSC Year Modified Successfully**");
+				break;
+		case 8: printf("\n\n **Enter New GPA :**");
+				scanf("%f", s.gpa);
+				printf("\n *GPA Modified Successfully**");
+				break;
+		case 9: printf("\n\n **Enter New Scholarship Info :**");
+				scanf("%s", s.schlrshp);
+				printf("\n *Scholarship Info Modified Successfully**");
+				break;
+		case 10: printf("\n\n **Enter New Blood Group :**");
+				 scanf("%s", s.b_g);
+				 printf("\n *Blood Group Modified Successfully**");
+				 break;
+		case 11: printf("\n\n **Enter New Email Address :**");
+				 scanf("%s", s.email);
+				 printf("\n *Email Address Modified Successfully**");
+				 break;
+		case 12: printf("\n\n **Enter New Contact Number :**");
+				 scanf("%d", s.c_n);
+				 printf("\n *Contact Number Modified Successfully**");
+				 break;
+		case 13: printf("\n\n **Enter Your Choice :**");
+				 printf("\n1. Full Payment\t2.Keep Dues\t3. No Pay");
+				 printf("\n \t =====");
+				 scanf("%d", &chPay);
+				 
+				 switch(chPay)
+				 {	case 1: strcpy(s[i].pay, "FULL_FEE");
+				 			break;
+				 	case 2: int advM, duesM;
+							printf("\n How Much will You Pay?");
+							printf("\n =====");
+							scanf("%d", advM);
+							duesM = FULL_FEE-advM;
+							strcpy(s[i].pay, "advM");
+							strcpy(s[i].dues, "duesM");
+							break;
+					case 3: strcpy(s[i].pay, "Not Paid");
+							break;
+					default:printf("\n\nWrong Choice, Please Try Again.");
+				 }
+				 printf("\n *Payment Status Modified Successfully**");
+
+		
+		case 14: goto startMod;
+				 break;
+		default:printf("\n\nWrong Choice, Please Try Again.");
+}
+			
+									
+}
+void displaySM()
+{	int dis[MAX], inv[MAX], i=0, ID, k, found, head=0;
+	char chSM, Y, N;
+	
+	startID:
+	
+	printf("\n\n Enter the Student's ID :");
+	scanf("%d", &ID);
+	printf("\n Do You Want to Enter the Next ID? (Y/N)");
+	printf("\n =====");
+	scanf("%c", &chSM);
+	if(chSM=='Y')
+		goto startID;
+		
+	/*while(1)
+	{	printf("\n Do You Want to Show the Next ID? (Y/N)");
+		printf("\n =====");
+		scanf("%c", &chSM);
+		
+		if(chSM=='Y')
+		{	printf("\n\n ID : ", ++i);
+			++i;
+		}
+		else
+			break;*/
+			
+	for(i=0;i<MAX;i++)
+	{	found=0;
+		for(int j=0; j<currentSize; j++)
+		{	DATA s = std_array[j];
+			if(dis[j]=s.id)
+			{	found=1;
+				++head;
+				if(head==1)
+					heading();
+				display(j);
+				//break;
+			}
+			break;
+		}
+		if(found==0)
+		{	++inv[k];
+			//inv[k]=dis[i];
+			//++k;
+			printf("\n !!Invalid ID Found!!");
+			display(k);
+			++k;
+		}
+	}
+	/*if(inv[]>0)
+		printf("\n !!Invalid ID Found!!");*/
+}
+
+
+void displayAll()
+{	if(currentSize==0)
+		printf("\n\n >> No Student Admitted Yet <<");
+	else
+	for(int i=0; i<currentSize; i++)
+		display(i);
+}
+
+
+void display(int x)
+{	int id;
+	DATA s = std_array[x];
+	char fullName [20];
+	strcpy(fullName, "s.f_name");
+	strcat(fullName, " ");
+	strcat(fullName, "s.l_name");
+	
+	printf("%-6d%-18s%-11s%-10s%-10d%-6f%-13s%-14s%-21s%-16d%-7d\n",s.id,fullName,s.n_name,s.c_name,s.gpa,s.schlrshp,s.b_g,s.email,s.c_n,s.pay);
+}
+
+
+void displayFull()
+{	
+    int found=0, i;
+	int head=0;
+	char chFull;
+	
+	for(i=0;i<currentSize;i++)
+	{	DATA s = std_array[i];
+		if(strcmp(s.pay,"Paid")==0)
+			++found;
+	}
+	printf("\n\n>>>>>>>>>> Students Giving Full Payment <<<<<<<<<<");
+	
+	for(i=0;i<currentSize;i++)
+	{	DATA s = std_array[i];
+		if(strcmp(s.pay,"Paid")==0)
+		{	++head;
+			if(head==1)
+				heading();
+			display(i);
+		}
+	}
+}
+
+
+void displayDues()
+{	int found=0, head=0, i;
+	char chDues;
+	
+	for(i=0;i<currentSize;i++)
+	{	DATA s = std_array[i];
+		if(strcmp(s.pay,"Dues")==0)
+			++found;
+	}
+	printf("\n\n>>>>>>>>>> Students Having Dues <<<<<<<<<<");
+	
+	for(i=0;i<currentSize;i++)
+	{	DATA s = std_array[i];
+		if(strcmp(s.pay,"Dues")==0)
+		{	++head;
+			if(head==1)
+				headingDues();
+			displayD(i);
+		}
+	}
+}
+
+
+void displayD(int x)
+{	int id;
+	DATA s = std_array[x];
+	char fullName [20];
+	strcpy(fullName, "s.f_name");
+	strcat(fullName, " ");
+	strcat(fullName, "s.l_name");
+	
+	printf("%-6d%-18s%-11s%-10s%-21s%-16d%-8d%-4d\n",s.id,fullName,s.n_name,s.c_name,s.email,s.c_n,s.adv,s.dues);
+}
+
+
+void display_NotPaid()
+{	int found=0, head=0, i;
+	char ch_NotPaid;
+	
+	for(i=0;i<currentSize;i++)
+	{	DATA s = std_array[i];
+		if(strcmp(s.pay,"Not Paid")==0)
+			++found;
+	}
+	printf("\n\n>>>>>>>>>> Students with No Payment <<<<<<<<<<");
+	
+	for(i=0;i<currentSize;i++)
+	{	DATA s = std_array[i];
+		if(strcmp(s.pay,"Not Paid")==0)
+		{	++head;
+			if(head==1)
+				heading_NotPaid();
+			displayNP(i);
+		}
+	}
+}
+
+
+void displayNP(int x)
+{	int id;
+	DATA s = std_array[x];
+	char fullName [20];
+	strcpy(fullName, "s.f_name");
+	strcat(fullName, " ");
+	strcat(fullName, "s.l_name");
+	
+	printf("%-6d%-18s%-11s%-10s%-21s%-16d\n",s.id,fullName,s.n_name,s.c_name,s.email,s.c_n);
+}
+
+
+void del()
+{	int id, found=0;
+	printf("\n\n Which ID info You Want to Delete?");
+	printf("\n =====");
+	scanf("%d", &id);
+	
+	if(currentSize==0)
+		printf("\n !!No Student Admitted Yet!!");
+	else
+	{	for(int i=0;i<currentSize;i++)
+		{	DATA s = std_array[i];
+			if(id==s.id)
+			{	for(int j=i;j<currentSize;j++)
+					std_array[j]=std_array[j+1];
+				currentSize-=currentSize;
+				found=1;
+			}
+		}
+		if(found==1)
+			printf("\n\n\t\t##ID Info Deleted Successfully##");
+	}
+}
+
+
+void fremove()
+{	FILE *fp;
+	DATA s;
+	
+	char name[25]	;
+	char val;
+	
+	printf("\n\n Do You Want to Make a Copy Of It? (Y/N)");
+	scanf("%c", &val);
+	
+	if(val=='Y')
+		{	printf("\n Enter the New File Name :");
+		
+		fflush(stdin);
+		
+		scanf("%[^\n]", name);
+		
+		fp=fopen(name, "wb");
+		//fp1=fopen(file, "rb");
+		
+//		while(1)
+//		{	
+//		    fread(std_array, sizeof(std_array), 1, fp1);
+//		    fread(&currentSize, sizeof(currentSize), 1, fp1);
+//            fread(&id, sizeof(id), 1, fp1);
+//		
+//			if(feof(fp1))
+//				break;
+//				 
+		fwrite(std_array, sizeof(std_array), 1, fp);
+      	fwrite(&currentSize, sizeof(currentSize), 1, fp);
+        fwrite(&id, sizeof(id), 1, fp);
+//		}
+		
+		//fclose(fp);
+		//fclose(fp1);
+		
+		remove(file);
+		
+		strcpy(file, name);
+		fclose(fp);
+	}
+	
+	else
+		remove(file);
+}
+
+
+void save()
+
+{	FILE *fp;
+	if((fp = fopen(file, "wb"))==NULL)
+		puts("\n\n Error, Can't Create a Database File!'");
+	
+	if(fwrite(std_array, sizeof(std_array), 1, fp)!=1)
+	    puts("\n Error, Can't Save Data!'");
+            
+	//Save the Current Size of the Database
+	if(fwrite(&currentSize, sizeof(currentSize), 1, fp)!=1)
+		puts("\n Error, Can't Save Data!'");
+		
+	//Save the Database Contents
+	if(fwrite(&id, sizeof(id), 1, fp)!=1)
+		puts("\n Error, Can't Save Data!'");
+		
+	fclose(fp);
+}
+
+
+void readFromFile()
+{	FILE *fp;
+	if((fp = fopen(file, "rb"))==NULL)
+		puts("\n\n Error, Can't Load a Database File!'");
+	 
+	 if(fread(std_array, sizeof(std_array), 1, fp)!=1)
+	    puts("\n Error, Can't Load Data!'");
+            
+	//Save the Current Size of the Database
+	if(fread(&currentSize, sizeof(currentSize), 1, fp)!=1)
+		puts("\n Error, Can't Load Data!'");
+		
+	//Save the Database Contents
+	if(fread(&id, sizeof(id), 1, fp)!=1)
+		puts("\n Error, Can't Load Data!'");
+		
+	fclose(fp);
+}
